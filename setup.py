@@ -5,9 +5,9 @@
     setup.py
     ~~~~~~~~
 
-    no description available
+    A set of tools for lawyers
 
-    :copyright: (c) 2021 by biagio.
+    :copyright: (c) 2021 by Law Engineering Systems SRL.
     :license: see LICENSE for more details.
 """
 
@@ -38,13 +38,13 @@ def find_version(*file_paths):
 setup(
     name='lawyertools',
     version=find_version("lawyertools", "__init__.py"),
-    description='no description available',
+    description='A set of tools for lawyers',
     long_description=read('README.rst'),
     classifiers=[
         ],
-    author='biagio',
-    author_email='',
-    url='',
+    author='Biagio Distefano',
+    author_email='b.distefano@lawengineeringsystems.com',
+    url='https://gitlab.com/lawengineeringsystems/lawyertools',
     packages=[
         'lawyertools'
         ],

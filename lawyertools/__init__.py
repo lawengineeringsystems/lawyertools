@@ -5,12 +5,12 @@
     __init__.py
     ~~~~~~~~~~~
 
-    no description available
+    A set of tools for lawyers
 
-    :copyright: (c) 2021 by biagio.
+    :copyright: (c) 2021 by Law Engineering Systems SRL.
     :license: see LICENSE for more details.
 """
 
 __title__ = 'lawyertools'
 __version__ = '0.0.1'
-__author__ = 'biagio'
+__author__ = 'Biagio Distefano'

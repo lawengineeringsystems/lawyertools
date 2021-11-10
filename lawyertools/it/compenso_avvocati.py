@@ -123,8 +123,8 @@ def calcola_compenso(pkey, competenza, valore, fasi, cpa=False, iva=False, **kwa
             totale=round(_t, 2)
         )
         t2 += _t
-    accessori["totale"] = round(t2, 2)
 
+    accessori["totale"] = round(t2, 2)
     output["totale"] = round(t0 + t1 + t2, 2)
 
     return output
