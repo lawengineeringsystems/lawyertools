@@ -1,6 +1,6 @@
 import math
 
-from lawyertools.it.data.tabelle import TABELLE
+from .data import TABELLE
 
 
 SPESE_GENERALI = 0.15
@@ -8,10 +8,10 @@ IVA = 0.22
 CPA = 0.04
 
 
-def validate(pkey, **kwargs):
+def validate(pkey, **regole):
     params = TABELLE["tabelle"][pkey]["regole"]
     param_keys = set(params.keys())
-    for key, value in kwargs.items():
+    for key, value in regole.items():
         if key not in param_keys:
             raise KeyError(f"{key} non è un parametro valido")
         aumento_max = params[key]["aumento_max"]
@@ -33,8 +33,8 @@ def validate(pkey, **kwargs):
     return params
 
 
-def calcola_compenso(pkey, competenza, valore, fasi, cpa=False, iva=False, **kwargs):
-    params = validate(pkey, **kwargs)
+def calcola_compenso(pkey, competenza, valore, fasi, cpa=False, iva=False, **regole):
+    params = validate(pkey, **regole)
     tabella = TABELLE["tabelle"][pkey]
     tabella_competenza = tabella["competenza"][competenza]
     scaglioni = tabella_competenza["scaglioni"]
@@ -52,7 +52,7 @@ def calcola_compenso(pkey, competenza, valore, fasi, cpa=False, iva=False, **kwa
     compenso_tabellare = dict()
     output["compenso_tabellare"] = compenso_tabellare
     t0 = 0
-    for fase, aumento_diminuzione in fasi:
+    for fase, aumento_diminuzione in fasi.items():
         compenso_base = tabella_competenza["fasi"][fase][i]
         if oltre_520k:
             loops = math.floor(math.log(valore / 1e6) / math.log(2) + 2)
@@ -70,7 +70,7 @@ def calcola_compenso(pkey, competenza, valore, fasi, cpa=False, iva=False, **kwa
     t1 = 0
     aumenti = dict()
     output["aumenti"] = aumenti
-    aumenti_speciali = {k: v for k, v in kwargs.items() if params[k]["su"] != "totale"}
+    aumenti_speciali = {k: v for k, v in regole.items() if params[k]["su"] != "totale"}
     for k, v in aumenti_speciali.items():
         compenso_fase_base_key = compenso_tabellare[params[k]["su"]]
         compenso_fase_base = compenso_tabellare[compenso_fase_base_key]
@@ -82,9 +82,9 @@ def calcola_compenso(pkey, competenza, valore, fasi, cpa=False, iva=False, **kwa
             totale=round(_t, 2)
         )
         t1 += _t
-        kwargs.pop(k)
+        regole.pop(k)
 
-    for k, v in kwargs.items():
+    for k, v in regole.items():
         if hasattr(v, "__iter__"):
             v = v[-1]
         _t = t0 * v  # todo: check if increases are to be compounded
@@ -135,15 +135,15 @@ if __name__ == '__main__':
         "p2018",
         "GIUDIZI ORDINARI E SOMMARI DI COGNIZIONE INNANZI AL TRIBUNALE",
         100_000,
-        [
-            ("Fase di studio della controversia", 0),
-            ("Fase introduttiva del giudizio", 0),
-            ("Fase istruttoria e/o di trattazione", 0),
-            ("Fase decisionale", 0)
-        ],
-        numero_parti=(10, 2),
+        {
+            "Fase di studio della controversia": 0,
+            "Fase introduttiva del giudizio": 0,
+            "Fase istruttoria e/o di trattazione": 0,
+            "Fase decisionale": 0
+        },
         cpa=True,
-        iva=True
+        iva=True,
+        numero_parti=(10, 2),
     )
     import json
     print(json.dumps(res, indent=4))
