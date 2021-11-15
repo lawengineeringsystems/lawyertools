@@ -10,7 +10,7 @@ from copy import deepcopy
 router = APIRouter(prefix="/compenso_avvocati")
 SERIALIZABLE_TABELLE = deepcopy(TABELLE)
 SERIALIZABLE_TABELLE["tabelle"]["p2018"]["regole"]["numero_parti"][
-    "aumento_max"] = "lambda x: (x-1) * 0.3 if x <= 10 else 2.7 + (x-10) * 0.1 if x <= 30 else 4.7"
+    "aumento_max"] = "lambda x: (x - 1) * 0.3 if x <= 10 else 2.7 + (x - 10) * 0.1 if x <= 30 else 4.7"
 
 
 class CompensoAvvocati(BaseModel):

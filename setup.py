@@ -35,19 +35,20 @@ def find_version(*file_paths):
         return version_match.group(1)
     raise RuntimeError("Unable to find version string.")
 
+
 setup(
     name='lawyertools',
     version=find_version("lawyertools", "__init__.py"),
     description='A set of tools for lawyers',
     long_description=read('README.rst'),
     classifiers=[
-        ],
+    ],
     author='Biagio Distefano',
     author_email='b.distefano@lawengineeringsystems.com',
     url='https://gitlab.com/lawengineeringsystems/lawyertools',
     packages=[
         'lawyertools'
-        ],
+    ],
     platforms='any',
     license='LICENSE',
     install_requires=[
@@ -55,5 +56,7 @@ setup(
         'pep8>=1.5.7',
         'pyflakes>=0.8.1',
         'fastapi==0.70.0',
-        ]
+        'uvicorn==0.15.0'
+    ],
+    scripts=['bin/lawyertools'],
 )

@@ -2,7 +2,6 @@ import math
 
 from .data import TABELLE
 
-
 SPESE_GENERALI = 0.15
 IVA = 0.22
 CPA = 0.04
@@ -146,4 +145,5 @@ if __name__ == '__main__':
         numero_parti=(10, 2),
     )
     import json
+
     print(json.dumps(res, indent=4))

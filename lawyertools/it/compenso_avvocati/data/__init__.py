@@ -892,7 +892,7 @@ TABELLE = {
             "regole": {
                 "numero_parti": {
                     "su": "totale",
-                    "aumento_max": lambda x: (x-1) * 0.3 if x <= 10 else 2.7 + (x-10) * 0.1 if x <= 30 else 4.7,
+                    "aumento_max": lambda x: (x - 1) * 0.3 if x <= 10 else 2.7 + (x - 10) * 0.1 if x <= 30 else 4.7,
                     "desc": "Art. 4, comma 2"
                 },
                 "conciliazione": {
