@@ -143,3 +143,4 @@ cython_debug/
 media
 server_setup/postgres_setup
 dummy_data.json
+*.sh
