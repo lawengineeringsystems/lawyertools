@@ -42,6 +42,12 @@ pydantic==1.8.2
 ...
 ```
 
+### Option C: Install with PIP
+
+Feeling lazy, uh?
+
+`pip install lawyertools`
+
 ## Run the API server
 
 Either install the library from git or clone it locally, then:
