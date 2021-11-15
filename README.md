@@ -50,7 +50,7 @@ Feeling lazy, uh?
 
 ## Run the API server
 
-Either install the library from git or clone it locally, then:
+Either install the library from git, pip or clone it locally, then:
 
 - on your terminal, run `lawyertools <port>`; <port> is optional and will default to 8000
 - if you want to run it manually, cd to `lawyertools` (within the library), then run: `uvicorn app:app`
