@@ -144,4 +144,4 @@ media
 server_setup/postgres_setup
 dummy_data.json
 *.sh
-lawyertools/it/misc
+lawyertools/it/compenso_avvocati/misc
