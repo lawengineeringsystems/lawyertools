@@ -56,6 +56,8 @@ Either install the library from git, pip or clone it locally, then:
 - if you want to run it manually, cd to `lawyertools` (within the library), then run: `uvicorn app:app`
 More info [here](https://fastapi.tiangolo.com/deployment/manually/)
   
+- visit `/docs` to visualise the auto-generated API documentation
+  
 
 # TODO:
 
