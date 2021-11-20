@@ -32,16 +32,16 @@ def calcola_interessi(
         new_dal, new_al = dal, dal + relativedelta(**{cap_unit: capitalizzazione})
         new_al = min(new_al, al)
         while True:
-            _it, _ip = calcola_interessi(capitale, new_dal, new_al)
-            capitale += _it
-            interessi_totali += _it
-            interessi_parziali.extend(_ip)
+            res = calcola_interessi(capitale, new_dal, new_al)
+            capitale += res["interessi_totali"]
+            interessi_totali += res["interessi_totali"]
+            interessi_parziali.extend(res["interessi_parziali"])
             new_dal = new_al + relativedelta(days=1)
             new_al = new_dal + relativedelta(**{cap_unit: capitalizzazione})
             if new_dal > al:
                 break
             new_al = min(new_al, al)
-        return interessi_totali, interessi_parziali
+        return dict(interessi_totali=round(interessi_totali, 2), interessi_parziali=interessi_parziali)
     for _dal, _al, saggio in TABELLA:
         _al = _al or al
         _al = min(_al, al)
@@ -52,16 +52,16 @@ def calcola_interessi(
         _dal = max(_dal, dal)
         td = _al - _dal
         giorni_parziali = td.days
-        interessi = capitale * saggio * giorni_parziali / 36500
+        interessi = round(capitale * saggio * giorni_parziali / 36500, 2)
         interessi_parziali.append((_dal, _al, saggio, giorni_parziali, interessi))
         interessi_totali += interessi
-    return dict(interessi_totali=interessi_totali, interessi_parziali=interessi_parziali)
+    return dict(interessi_totali=round(interessi_totali, 2), interessi_parziali=interessi_parziali)
 
 
 if __name__ == '__main__':
-    _interessi_totali, _interessi_parziali = calcola_interessi(1000, "1970-01-01", datetime.date.today(),
+    res = calcola_interessi(1000, "1970-01-01", datetime.date.today(),
                                                                capitalizzazione=3, cap_unit="mesi")
-    for __dal, __al, __saggio, __giorni, __interessi in _interessi_parziali:
+    for __dal, __al, __saggio, __giorni, __interessi in res["interessi_parziali"]:
         print(
             f"dal {__dal.strftime('%d-%m-%Y')} al {__al.strftime('%d-%m-%Y')}: {__saggio}%, {__giorni} giorni, interessi: {__interessi}")
-    print(_interessi_totali)
+    print(res["interessi_totali"])
