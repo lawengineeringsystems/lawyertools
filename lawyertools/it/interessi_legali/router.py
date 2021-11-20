@@ -1,11 +1,12 @@
+import json
+
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse, Response
-import json
 from pydantic import BaseModel
 
+from .data import TABELLA
 from .main import calcola_interessi
 from ...utils import DatetimeEncoder
-from .data import TABELLA
 
 router = APIRouter(prefix="/interessi_legali")
 
