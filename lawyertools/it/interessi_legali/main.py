@@ -61,9 +61,9 @@ def calcola_interessi(
 
 
 if __name__ == '__main__':
-    res = calcola_interessi(1000, "1970-01-01", datetime.date.today(),
+    _res = calcola_interessi(1000, "1970-01-01", datetime.date.today(),
                             capitalizzazione=3, cap_unit="mesi")
-    for __dal, __al, __saggio, __giorni, __interessi in res["interessi_parziali"]:
+    for __dal, __al, __saggio, __giorni, __interessi in _res["interessi_parziali"]:
         print(
             f"dal {__dal.strftime('%d-%m-%Y')} al {__al.strftime('%d-%m-%Y')}: {__saggio}%, {__giorni} giorni, interessi: {__interessi}")
-    print(res["interessi_totali"])
+    print(_res["interessi_totali"])
