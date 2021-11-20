@@ -1,7 +1,7 @@
 import datetime
 from dateutil.relativedelta import relativedelta
 
-from lawyertools.it.interessi_legali.data import TABELLA
+from .data import TABELLA
 
 # I = C * s * t / 36500
 
@@ -54,7 +54,7 @@ def calcola_interessi(
         interessi = capitale * saggio * giorni_parziali / 36500
         interessi_parziali.append((_dal, _al, saggio, giorni_parziali, interessi))
         interessi_totali += interessi
-    return interessi_totali, interessi_parziali
+    return dict(interessi_totali=interessi_totali, interessi_parziali=interessi_parziali)
 
 
 if __name__ == '__main__':

@@ -1,39 +1,32 @@
 from fastapi import APIRouter
-from fastapi.responses import JSONResponse
-
+from fastapi.responses import JSONResponse, Response
+import json
 from pydantic import BaseModel
 
-from .main import calcola_compenso
-from .data import TABELLE
-from copy import deepcopy
+from .main import calcola_interessi
+from ...utils import DatetimeEncoder
+from .data import TABELLA
 
 router = APIRouter(prefix="/interessi_legali")
-SERIALIZABLE_TABELLE = deepcopy(TABELLE)
-SERIALIZABLE_TABELLE["tabelle"]["p2018"]["regole"]["numero_parti"][
-    "aumento_max"] = "lambda x: (x - 1) * 0.3 if x <= 10 else 2.7 + (x - 10) * 0.1 if x <= 30 else 4.7"
 
 
-class CompensoAvvocati(BaseModel):
-    pkey: str = "p2018"
-    competenza: str = "GIUDIZI ORDINARI E SOMMARI DI COGNIZIONE INNANZI AL TRIBUNALE"
-    valore: int
-    fasi: dict[str, int]
-    cpa: bool = False
-    iva: bool = False
-    regole: dict = None
+class InteressiLegali(BaseModel):
+    capitale: float
+    dal: str
+    al: str
+    capitalizzazione: int = 0
+    cap_unit: str = "mesi"
 
 
-@router.post("/calcola/")
-def _calcola_compenso(q: CompensoAvvocati):
+@router.post("/calcola_interessi/")
+def _calcola_compenso(q: InteressiLegali):
     try:
-        res = calcola_compenso(
-            pkey=q.pkey,
-            competenza=q.competenza,
-            valore=q.valore,
-            fasi=q.fasi,
-            cpa=q.cpa,
-            iva=q.iva,
-            **q.regole
+        res = calcola_interessi(
+            capitale=q.capitale,
+            dal=q.dal,
+            al=q.al,
+            capitalizzazione=q.capitalizzazione,
+            cap_unit=q.cap_unit
         )
         return JSONResponse(
             status_code=200,
@@ -43,6 +36,7 @@ def _calcola_compenso(q: CompensoAvvocati):
         return JSONResponse(status_code=422, content=dict(error=str(e)))
 
 
-@router.get("/tabelle")
+@router.get("/tabella")
 def _tabelle():
-    return JSONResponse(status_code=200, content=SERIALIZABLE_TABELLE)
+    tabella = json.dumps(TABELLA, cls=DatetimeEncoder)
+    return Response(status_code=200, content=tabella, media_type="application/json")
