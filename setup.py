@@ -56,7 +56,8 @@ setup(
         'pep8>=1.5.7',
         'pyflakes>=0.8.1',
         'fastapi==0.70.0',
-        'uvicorn==0.15.0'
+        'uvicorn==0.15.0',
+        'python-dateutil==2.8.2'
     ],
     scripts=['bin/lawyertools'],
 )
