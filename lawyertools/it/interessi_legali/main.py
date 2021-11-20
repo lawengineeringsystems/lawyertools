@@ -25,9 +25,11 @@ def calcola_interessi(
     cap_unit = CAP_UNIT_MAP.get(cap_unit, cap_unit)
     assert cap_unit in ALLOWED_CAP_UNITS, f"Unità di capitalizzazione non valida: {cap_unit}." \
                                           f"Unità ammesse: {ALLOWED_CAP_UNITS}"
+    if cap_unit == "days":
+        assert capitalizzazione >= 30, f"La capitalizzazione non può essere inferiore a un mese"
     interessi_parziali = []
     interessi_totali = 0.0
-    assert (dal >= TABELLA[0][0]), f"Data minima ammessa: {TABELLA[0][0].strftime('%Y-%m-%d')}"
+    assert (dal >= TABELLA[0][0]), f"Data minima ammessa: {TABELLA[0][0].isoformat()}"
     if capitalizzazione > 0:
         new_dal, new_al = dal, dal + relativedelta(**{cap_unit: capitalizzazione})
         new_al = min(new_al, al)

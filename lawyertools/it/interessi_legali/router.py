@@ -1,4 +1,5 @@
 import json
+import datetime
 
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse, Response
@@ -13,8 +14,8 @@ router = APIRouter(prefix="/interessi_legali")
 
 class InteressiLegali(BaseModel):
     capitale: float
-    dal: str
-    al: str
+    dal: str = TABELLA[0][0].isoformat()
+    al: str = datetime.datetime.today().date().isoformat()
     capitalizzazione: int = 0
     cap_unit: str = "mesi"
 
