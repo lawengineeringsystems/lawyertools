@@ -53,14 +53,14 @@ def calcola_interessi(
         td = _al - _dal
         giorni_parziali = td.days
         interessi = round(capitale * saggio * giorni_parziali / 36500, 2)
-        interessi_parziali.append((_dal, _al, saggio, giorni_parziali, interessi))
+        interessi_parziali.append(dict(dal=_dal, al=_al, saggio=saggio, giorni=giorni_parziali, interessi=interessi))
         interessi_totali += interessi
     return dict(interessi_totali=round(interessi_totali, 2), interessi_parziali=interessi_parziali)
 
 
 if __name__ == '__main__':
     res = calcola_interessi(1000, "1970-01-01", datetime.date.today(),
-                                                               capitalizzazione=3, cap_unit="mesi")
+                            capitalizzazione=3, cap_unit="mesi")
     for __dal, __al, __saggio, __giorni, __interessi in res["interessi_parziali"]:
         print(
             f"dal {__dal.strftime('%d-%m-%Y')} al {__al.strftime('%d-%m-%Y')}: {__saggio}%, {__giorni} giorni, interessi: {__interessi}")

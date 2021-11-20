@@ -29,9 +29,10 @@ def _calcola_compenso(q: InteressiLegali):
             capitalizzazione=q.capitalizzazione,
             cap_unit=q.cap_unit
         )
-        return JSONResponse(
+        return Response(
             status_code=200,
-            content=res
+            content=json.dumps(res, cls=DatetimeEncoder),
+            media_type="application/json"
         )
     except Exception as e:
         return JSONResponse(status_code=422, content=dict(error=str(e)))
