@@ -61,6 +61,9 @@ More info [here](https://fastapi.tiangolo.com/deployment/manually/)
 
 # TODO:
 
-- write better docs (no shit)
+- Dockerize
+- CI/CD  
+- write proper docs in *.rst (no shit)
 - write tests
+- write cli
 - write examples
