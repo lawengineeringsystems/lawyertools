@@ -62,7 +62,7 @@ More info [here](https://fastapi.tiangolo.com/deployment/manually/)
 # TODO:
 
 - Dockerize
-- CI/CD  
+- CI/CD
 - write proper docs in *.rst (no shit)
 - write tests
 - write cli
